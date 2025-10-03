@@ -1,26 +1,31 @@
-import {Router}  from "express"
+import { Router } from "express";
 
-const router = Router()
+const router = Router();
 
+const post = [];
 
-router.get("/",(_,res)=>{
-    res.send("postlar")
-})
+router.get("/", (_, res) => {
+  res.status(200).send(post);
+});
 
-router.post("/",(req,res)=>{
-    const {title, img_url}=req.body
+router.post("/", (req, res) => {
+  const { title, img_url } = req.body;
 
-    try {
-        
-        if(!title || !img_url){
-            res.send("maydonlarni to'ldiring")
-            return
-        }
-        res.status(201).send({posts:{title,img_url}})
-
-    } catch (error) {
-        res.send(error.message)
+  try {
+    if (!title || !img_url) {
+      res.send("maydonlarni to'ldiring");
+      return;
     }
-})
+    const newPost = {
+      title,
+      img_url,
+    };
+    post.push(newPost);
 
-export default router
+    res.status(201).send({ posts: newPost });
+  } catch (error) {
+    res.send(error.message);
+  }
+});
+
+export default router;
