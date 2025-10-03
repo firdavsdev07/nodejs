@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { v4 as uuidv4 } from "uuid";
 
 const router = Router();
 
@@ -10,13 +11,13 @@ router.get("/", (_, res) => {
 
 router.post("/", (req, res) => {
   const { title, img_url } = req.body;
-
   try {
     if (!title || !img_url) {
       res.send("maydonlarni to'ldiring");
       return;
     }
     const newPost = {
+      id: uuidv4(),
       title,
       img_url,
     };
